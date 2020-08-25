@@ -5,18 +5,20 @@ class OilSpill {
         this._cleanedTiles = 0;
         this._startingPos = spillData["startingPosition"];
         this._directions = spillData["navigationInstructions"];
+        this._finalPos = this._startingPos;
     }
-    answer() {
+    getData() {
+        this.movement();
         return {
-            "finalPosition": this.finalPosition(this._startingPos, this._directions),
+            "finalPosition": this._finalPos,
             "oilPatchesCleaned": this._cleanedTiles
         };
     }
-    finalPosition(startingPos, directions) {
-        var x = startingPos[0];
-        var y = startingPos[1];
-        for (let i = 0; i < directions.length; i++) {
-            switch (directions[i]) {
+    movement() {
+        var x = this._startingPos[0];
+        var y = this._startingPos[1];
+        for (let i = 0; i < this._directions.length; i++) {
+            switch (this._directions[i]) {
                 case 'N':
                     y += 1;
                     break;
@@ -30,23 +32,16 @@ class OilSpill {
                     x -= 1;
                     break;
             }
-            this.cleanedTile([x, y]);
+            this.countCleanedTiles([x, y]);
         }
-        return [x, y];
+        this._finalPos = [x, y];
     }
-    oilCheck(position) {
-        let oilTile = false;
+    countCleanedTiles(position) {
         for (let i = 0; i < this._oilTiles.length; i++) {
             if (position[0] === this._oilTiles[i][0] && position[1] === this._oilTiles[i][1]) {
-                oilTile = true;
-                this._oilTiles.splice(i, 1);
+                this._cleanedTiles++;
+                this._oilTiles.splice(i);
             }
-        }
-        return oilTile;
-    }
-    cleanedTile(postion) {
-        if (this.oilCheck(postion)) {
-            this._cleanedTiles++;
         }
     }
 }

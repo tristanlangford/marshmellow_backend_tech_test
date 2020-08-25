@@ -7,7 +7,6 @@ class OilSpill {
         this._directions = spillData["navigationInstructions"];
     }
     answer() {
-        console.log(this.finalPosition(this._startingPos, this._directions));
         return {
             "finalPosition": this.finalPosition(this._startingPos, this._directions),
             "oilPatchesCleaned": this._cleanedTiles

@@ -1,9 +1,11 @@
 "use strict";
-function oilSpillAnswer() {
-    return {
-        "finalPosition": [1, 3],
-        "oilPatchesCleaned": 1
-    };
+class OilSpill {
+    answer() {
+        return {
+            "finalPosition": [1, 3],
+            "oilPatchesCleaned": 1
+        };
+    }
 }
-module.exports = oilSpillAnswer;
+module.exports = OilSpill;
 //# sourceMappingURL=oilSpill.js.map

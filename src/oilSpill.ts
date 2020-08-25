@@ -1,11 +1,14 @@
+class OilSpill {
 
-
-    function oilSpillAnswer() {
+    answer() {
         return {
             "finalPosition" : [1, 3],
             "oilPatchesCleaned" : 1
           }
+    
     }
 
+}
 
-    module.exports = oilSpillAnswer
+
+    module.exports = OilSpill

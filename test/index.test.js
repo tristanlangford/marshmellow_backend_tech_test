@@ -1,6 +1,11 @@
-var oilSpillAnswer = require('../dist/oilSpill.js')
+var OilSpill = require('../dist/oilSpill.js')
 
 describe('oilSpillAnswer', function() {
+    let oilSpill
+
+    beforeEach(function() {
+        oilSpill = new OilSpill
+    })
 
     test('outputs json', function() {
         var jsonAnswer = 
@@ -9,7 +14,9 @@ describe('oilSpillAnswer', function() {
                 "oilPatchesCleaned" : 1
               }
         
-        expect(oilSpillAnswer()).toEqual(jsonAnswer)
+        expect(oilSpill.answer()).toEqual(jsonAnswer)
     })
+
+
 
 })

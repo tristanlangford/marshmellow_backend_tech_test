@@ -1,10 +1,11 @@
 var OilSpill = require('../dist/oilSpill.js')
+var mockInput = require('./mockInput.json')
 
 describe('oilSpillAnswer', function() {
     let oilSpill
 
     beforeEach(function() {
-        oilSpill = new OilSpill
+        oilSpill = new OilSpill(mockInput)
     })
 
     test('outputs json', function() {
@@ -15,6 +16,10 @@ describe('oilSpillAnswer', function() {
               }
         
         expect(oilSpill.answer()).toEqual(jsonAnswer)
+    })
+
+    test('gets final position', function() {
+        expect(oilSpill.finalPosition([1, 2], "NNESEESWNWW")).toEqual([1, 3])
     })
 
 

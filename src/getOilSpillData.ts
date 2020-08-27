@@ -1,40 +1,56 @@
 (function(exports) {
-    let finalPos: number[]
+    let currentPos: number[]
     let cleanedCount: number = 0
-    let oilTiles: ([] |number[][]) 
+    let oilTiles: ([] | number[][]) 
 
     function getOilSpillData(data: any) {
-        oilTiles = data["oilPatches"]
-        cleanedCount = 0
-        movement(data['startingPosition'], data['navigationInstructions'])
+        clearData(data)
+        movement(data['navigationInstructions'], data['areaSize'])
         return {
-            "finalPosition" : finalPos,
+            "finalPosition" : currentPos,
             "oilPatchesCleaned" : cleanedCount
         }
     }
 
-    function movement(startingPos: number[], directions: string) {
-        var x = startingPos[0]
-        var y = startingPos[1]
+    function clearData(data: any) {
+        currentPos = data['startingPosition']
+        cleanedCount = 0
+        oilTiles = data["oilPatches"]
+    }
+
+    function movement(directions: string, seaSize: number[]) {
         for(let i = 0; i < directions.length; i++) {
-            switch(directions[i]) {
-                case 'N':
-                    y +=1
-                    break
-                case 'S':
-                    y -= 1
-                    break
-                case 'E':
-                    x+=1
-                    break
-                case 'W':
-                    x-=1
-                    break
-            }
-            countCleanedTiles([x, y])
-            console.log(oilTiles, cleanedCount)
+                move(directions[i], seaSize)
         }
-        finalPos = [x, y]
+    }
+
+    function move(direction: string, seaSize: number[]) {
+        switch(direction) {
+            case 'N':
+                var newPos: number[] = [currentPos[0], currentPos[1] + 1]
+                countCleanedTiles(newPos)
+                return canMove(newPos, seaSize)
+            case 'S':
+                var newPos: number[] = [currentPos[0], currentPos[1] - 1]
+                countCleanedTiles(newPos)
+                return canMove(newPos, seaSize)
+            case 'E':
+                var newPos: number[] = [currentPos[0] + 1, currentPos[1]]
+                countCleanedTiles(newPos)
+                return canMove(newPos, seaSize)
+            case 'W':
+                var newPos: number[] = [currentPos[0] - 1, currentPos[1]]
+                countCleanedTiles(newPos)
+                return canMove(newPos, seaSize)
+        }
+    }
+
+    function canMove(newPos: number[], seaSize: number[]) {
+        if (newPos[0] >= 0 && newPos[0] <= seaSize[0] && newPos[1] >= 0 && newPos[1] <= seaSize[1]) {
+            currentPos = newPos
+        } else {
+            throw new Error('moved outside of sea')
+        }
     }
 
     function countCleanedTiles(position: number[]) {

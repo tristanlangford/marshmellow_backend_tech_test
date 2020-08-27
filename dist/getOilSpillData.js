@@ -1,39 +1,53 @@
 "use strict";
 (function (exports) {
-    let finalPos;
+    let currentPos;
     let cleanedCount = 0;
     let oilTiles;
     function getOilSpillData(data) {
-        oilTiles = data["oilPatches"];
-        cleanedCount = 0;
-        movement(data['startingPosition'], data['navigationInstructions']);
+        clearData(data);
+        movement(data['navigationInstructions'], data['areaSize']);
         return {
-            "finalPosition": finalPos,
+            "finalPosition": currentPos,
             "oilPatchesCleaned": cleanedCount
         };
     }
-    function movement(startingPos, directions) {
-        var x = startingPos[0];
-        var y = startingPos[1];
+    function clearData(data) {
+        currentPos = data['startingPosition'];
+        cleanedCount = 0;
+        oilTiles = data["oilPatches"];
+    }
+    function movement(directions, seaSize) {
         for (let i = 0; i < directions.length; i++) {
-            switch (directions[i]) {
-                case 'N':
-                    y += 1;
-                    break;
-                case 'S':
-                    y -= 1;
-                    break;
-                case 'E':
-                    x += 1;
-                    break;
-                case 'W':
-                    x -= 1;
-                    break;
-            }
-            countCleanedTiles([x, y]);
-            console.log(oilTiles, cleanedCount);
+            move(directions[i], seaSize);
         }
-        finalPos = [x, y];
+    }
+    function move(direction, seaSize) {
+        switch (direction) {
+            case 'N':
+                var newPos = [currentPos[0], currentPos[1] + 1];
+                countCleanedTiles(newPos);
+                return canMove(newPos, seaSize);
+            case 'S':
+                var newPos = [currentPos[0], currentPos[1] - 1];
+                countCleanedTiles(newPos);
+                return canMove(newPos, seaSize);
+            case 'E':
+                var newPos = [currentPos[0] + 1, currentPos[1]];
+                countCleanedTiles(newPos);
+                return canMove(newPos, seaSize);
+            case 'W':
+                var newPos = [currentPos[0] - 1, currentPos[1]];
+                countCleanedTiles(newPos);
+                return canMove(newPos, seaSize);
+        }
+    }
+    function canMove(newPos, seaSize) {
+        if (newPos[0] >= 0 && newPos[0] <= seaSize[0] && newPos[1] >= 0 && newPos[1] <= seaSize[1]) {
+            currentPos = newPos;
+        }
+        else {
+            throw new Error('moved outside of sea');
+        }
     }
     function countCleanedTiles(position) {
         for (let i = 0; i < oilTiles.length; i++) {

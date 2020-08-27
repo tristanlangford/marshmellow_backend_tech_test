@@ -1,6 +1,6 @@
-var OilSpill = require('../dist/getOilSpillData')
 var mockInput1 = require('./mockInput.json')
 var mockInput2 = require('./mockInput2.json')
+var mockInputError = require('./mockInputError.json')
 const getOilSpillData = require('../dist/getOilSpillData')
 
 describe('oilSpillAnswer', function() {
@@ -23,5 +23,10 @@ describe('oilSpillAnswer', function() {
               }
         expect(getOilSpillData(mockInput2)).toEqual(jsonAnswer)
     })
+
+    test('throws an error if cleaner moves outside of the sea', () => {
+        expect(() => {
+            getOilSpillData(mockInputError);
+        }).toThrow('moved outside of sea');})
 
 })

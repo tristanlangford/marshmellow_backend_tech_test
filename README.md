@@ -40,20 +40,19 @@ This is a backend tech test for Marshmallow Insurance. Built using JavaScript, N
 
    ```js
    const oilSpill = {
-    "areaSize" : [5, 5],
-    "startingPosition" : [1, 2],
-    "oilPatches" : [
-      [1, 0],
-      [2, 2],
-      [2, 3]
-    ],
-    "navigationInstructions" : "NNESEESWNWW"
-  }
-   ```
+        "areaSize" : [5, 5],
+        "startingPosition" : [1, 2],
+        "oilPatches" : [
+        [1, 0],
+        [2, 2],
+        [2, 3]
+        ],
+        "navigationInstructions" : "NNESEESWNWW"
+    }
+    ```
 
 7. Get the final position and oil spills cleaned with the following method:
 
    ```js
    getOilSpillData(oilSpill)
    ```
-   

@@ -2,7 +2,7 @@
 
 A programme designed to calculate the final position of a sea cleaner, and count the oil spills cleaned. Takes in a json file with information on the size of the sea, positions of the spills, starting position of the cleaner, and directions the cleaner will take.
 
-This is a backend tech test for Marshmallow Insurance. Built using JavaScript, Node.js & Typescript.
+This is a backend tech test for Marshmallow Insurance. Built using TDD, JavaScript, Node.js, Typescript, & Jest for testing.
 
 ## Challenge
 
